@@ -1,4 +1,4 @@
-name: publish
+name: npm Publish
 
 on:
   push:
@@ -9,7 +9,6 @@ on:
       - 'lib/**'
 
 permissions:
-  contents: read
   id-token: write
 
 jobs:
@@ -18,14 +17,14 @@ jobs:
     if: github.repository == 'DIYgod/RSSHub'
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      HUSKY: 0
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
-          version: 8
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
+          node-version: lts/*
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies (pnpm)
